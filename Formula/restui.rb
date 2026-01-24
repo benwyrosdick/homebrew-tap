@@ -1,13 +1,13 @@
 class Restui < Formula
   desc "A TUI API testing tool like Postman"
   homepage "https://github.com/benwyrosdick/restui"
-  version "0.1.11"
+  version "0.1.12"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/benwyrosdick/restui/releases/download/v#{version}/restui-aarch64-apple-darwin.tar.gz"
-      sha256 "5e0e962f46204a5b449c89a5479d923b786e7a7b3e4e321f44e51c53d02846ea"
+      sha256 "9190471396db952bdd97e4cfa5ecada05682cb50102b1603a1f0fa42041068e2"
     else
       url "https://github.com/benwyrosdick/restui/releases/download/v#{version}/restui-x86_64-apple-darwin.tar.gz"
       sha256 "e03fbc9d0778f01050242eb4fe4b559d1b5fa1de3ed1ef68cea672171bb1954d"
