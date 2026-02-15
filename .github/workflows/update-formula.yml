@@ -15,6 +15,7 @@ jobs:
 
       - name: Update formula
         run: |
+          FORMULA="${{ github.event.client_payload.formula }}"
           VERSION="${{ github.event.client_payload.version }}"
           VERSION="${VERSION#v}"  # Remove 'v' prefix if present
 
@@ -23,22 +24,26 @@ jobs:
           SHA_LINUX="${{ github.event.client_payload.sha_linux }}"
 
           # Update version
-          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/restui.rb
+          sed -i "s/version \".*\"/version \"${VERSION}\"/" Formula/${FORMULA}.rb
 
           # Update SHA256 sums
-          sed -i "s/sha256 \"SHA256_X86_DARWIN\"/sha256 \"${SHA_X86_DARWIN}\"/" Formula/restui.rb
-          sed -i "s/sha256 \"SHA256_ARM_DARWIN\"/sha256 \"${SHA_ARM_DARWIN}\"/" Formula/restui.rb
-          sed -i "s/sha256 \"SHA256_LINUX\"/sha256 \"${SHA_LINUX}\"/" Formula/restui.rb
+          sed -i "s/sha256 \"SHA256_X86_DARWIN\"/sha256 \"${SHA_X86_DARWIN}\"/" Formula/${FORMULA}.rb
+          sed -i "s/sha256 \"SHA256_ARM_DARWIN\"/sha256 \"${SHA_ARM_DARWIN}\"/" Formula/${FORMULA}.rb
+          sed -i "s/sha256 \"SHA256_LINUX\"/sha256 \"${SHA_LINUX}\"/" Formula/${FORMULA}.rb
 
-          # Also handle updates to existing SHA256 values (40+ hex chars)
-          sed -i "0,/sha256 \"[a-f0-9]\{64\}\"/s//sha256 \"${SHA_ARM_DARWIN}\"/" Formula/restui.rb
+          # Also handle updates to existing SHA256 values (64 hex chars)
+          sed -i "0,/sha256 \"[a-f0-9]\{64\}\"/s//sha256 \"${SHA_ARM_DARWIN}\"/" Formula/${FORMULA}.rb
+          # Second occurrence (x86 darwin or linux depending on platform order)
+          sed -i "0,/sha256 \"[a-f0-9]\{64\}\"/s//sha256 \"${SHA_X86_DARWIN}\"/" Formula/${FORMULA}.rb
+          sed -i "0,/sha256 \"[a-f0-9]\{64\}\"/s//sha256 \"${SHA_LINUX}\"/" Formula/${FORMULA}.rb
 
-          cat Formula/restui.rb
+          cat Formula/${FORMULA}.rb
 
       - name: Commit and push
         run: |
+          FORMULA="${{ github.event.client_payload.formula }}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/restui.rb
-          git commit -m "Update restui to ${{ github.event.client_payload.version }}"
+          git add Formula/${FORMULA}.rb
+          git commit -m "Update ${FORMULA} to ${{ github.event.client_payload.version }}"
           git push
