@@ -9,10 +9,10 @@ class Lazychess < Formula
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/benwyrosdick/lazychess/releases/download/v#{version}/lazychess-aarch64-apple-darwin.tar.gz"
-      sha256 '3f16e00ca6fc1f6861158941daf7df2b400ed1cb265f5e101de2a45a422c2b4b'
+      sha256 'c60257c0ffcb6bf101a49a510057aede8997e07eefbd479a53a66b5461e0d5c7'
     else
       url "https://github.com/benwyrosdick/lazychess/releases/download/v#{version}/lazychess-x86_64-apple-darwin.tar.gz"
-      sha256 '76472e2ffe1c21472cb5cc8aeba2b9235842adafe80f9bc2eb3d0c40e8a58c2e'
+      sha256 '85f4f3accde42770261b771223c251f3bebf7f7e8566872a05d9051cb877eeac'
     end
   end
 
@@ -21,7 +21,7 @@ class Lazychess < Formula
       odie 'lazychess is not currently supported on Linux ARM'
     else
       url "https://github.com/benwyrosdick/lazychess/releases/download/v#{version}/lazychess-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 '284aed1459051db03d7bffed269867947ea34804899b10a84028ab4c8a9f353a'
+      sha256 '8ccc0b1af7f19606ae76651749d8e8c26113f75276892bccc535de1cc80ddcdb'
     end
   end
 
